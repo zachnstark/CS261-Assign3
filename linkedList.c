@@ -28,6 +28,10 @@ struct linkedList{
 
 void _initList (struct linkedList *lst) {
    /* FIXME: you must write this */
+   assert(lst != 0); 
+   lst->firstLink = malloc(sizeof(struct Dlink));
+   lst->lastLink = malloc(sizeof(struct Dlink));
+   lst->size = 0;
 }
 
 /*
@@ -59,7 +63,18 @@ struct linkedList *createLinkedList()
 void _addLinkBefore(struct linkedList *lst, struct DLink *l, TYPE v)
 {
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   assert(l != 0);
+   struct DLink * add = malloc(sizeof(struct DLink));
+   add->value = v;
+   if(l->prev != 0)
+      l->prev->next = add;
+   else
+      lst->firstLink = add;
+   add->prev = l->prev;
+   l->prev = add;
+   add->next = l;
+   lst->size++;
 }
 
 /*
@@ -74,19 +89,43 @@ void _removeLink(struct linkedList *lst, struct DLink *l)
 {
 
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   assert(l != 0);
+   struct DLink * temp = malloc(sizeof(struct DLink));
+   temp = l;
+   if(l->prev != 0 && l->next != 0){
+      l->next->prev = l->prev;
+      l->prev->next = l->next;
+   }
+   else if(l->prev == 0 && l->next != 0){
+      l->next->prev = 0;
+      lst->firstLink = l->next;
+   }
+   else if(l->prev != 0 && l->next == 0){
+      l->prev->next = 0;
+      lst->lastLink = l->prev;
+   }
+   else{
+      lst->firstLink = 0;
+      lst->lastLink = 0;
+   }
+   free(temp);
+   lst->size--;
 }
 
 /*
  *isEmptyList
  *param: lst the linkedList
  *pre: lst is not null
- *post: none
+ *post: 1 if empty 0 if not
  **/
 int isEmptyList(struct linkedList *lst) {
    /* FIXME: you must write this */
    /*temporary return value...you may need to change this */
-   return(1);
+   if(lst->firstLink == 0)
+      return 1;
+   if(lst->firstLink != 0)
+      return 0;
 }
 
 /* De-allocate all links of the list
@@ -97,9 +136,9 @@ int isEmptyList(struct linkedList *lst) {
  **/
 void freeLinkedList(struct linkedList *lst)
 {
-   while(!isEmptyList(lst)) {
-      /* remove the link right after the first sentinel */
-      _removeLink(lst, lst->firstLink->next);
+   while(isEmptyList(lst) != 1) {
+      /* remove the first sentinel */
+      _removeLink(lst, lst->firstLink);
    }		
    /* remove the first and last sentinels */
    free(lst->firstLink);
@@ -125,7 +164,12 @@ void deleteLinkedList(struct linkedList *lst)
 void _printList(struct linkedList* lst)
 {
    /* FIXME: you must write this */
-
+   struct DLink * temp = malloc(sizeof(struct DLink));
+   temp = lst->firstLink;
+   for(int i = 0; i < lst->size; i++){
+      printf("%f", temp->value);
+      temp = temp->next;
+   }
 }
 
 /* ************************************************************************
@@ -141,9 +185,9 @@ void _printList(struct linkedList* lst)
  **/
 void addFrontList(struct linkedList *lst, TYPE e)
 {
-
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   _addLinkBefore(lst, lst->firstLink, e); 
 }
 
 /*
@@ -154,8 +198,15 @@ void addFrontList(struct linkedList *lst, TYPE e)
  *post: lst is not empty, increased size by 1
  **/
 void addBackList(struct linkedList *lst, TYPE e) {
-
    /* FIXME: you must write this */
+   assert(lst != 0);
+   struct DLink * add = malloc(sizeof(struct DLink));
+   add->value = e;
+   add->next = 0;
+   add->prev = lst->lastLink;
+   lst->lastLink->next = add;
+   lst->lastLink = add;
+   lst->size++;
 }
 
 /*
@@ -168,7 +219,9 @@ void addBackList(struct linkedList *lst, TYPE e) {
 TYPE frontList (struct linkedList *lst) {
    /* FIXME: you must write this */
    /*temporary return value...you may need to change this */
-   return(1);
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   return lst->firstLink->value;
 }
 
 /*
@@ -182,7 +235,9 @@ TYPE backList(struct linkedList *lst)
 {
    /* FIXME: you must write this */
    /*temporary return value...you may need to change this */
-   return(1);
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   return lst->lastLink->value;
 }
 
 
@@ -196,7 +251,9 @@ TYPE backList(struct linkedList *lst)
  **/
 void removeFrontList(struct linkedList *lst) {
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   _removeLink(lst, lst->firstLink);
 }
 
 /*
@@ -209,7 +266,9 @@ void removeFrontList(struct linkedList *lst) {
 void removeBackList(struct linkedList *lst)
 {	
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   _removeLink(lst, lst->lastLink);
 }
 
 
@@ -227,7 +286,8 @@ void removeBackList(struct linkedList *lst)
 void addList(struct linkedList *lst, TYPE v)
 {
    /* FIXME: you must write this */
-
+   assert(lst != 0);
+   _addLinkBefore(lst, lst->firstLink, v);
 }
 
 /*Returns boolean (encoded as an int) demonstrating whether or not
@@ -243,7 +303,16 @@ void addList(struct linkedList *lst, TYPE v)
 int containsList (struct linkedList *lst, TYPE e) {
    /* FIXME: you must write this */
    /*temporary return value...you may need to change this */
-   return(1);
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   struct DLink * temp = malloc(sizeof(struct DLink));
+   temp = lst->firstLink;
+   for(int i = 0; i < lst->size; i++){
+      if(temp->value == e)
+	 return 1;
+      temp = temp->next;
+   }
+   return 0;
 }
 
 /*Removes the first occurrence of the specified value from the collection
@@ -257,4 +326,12 @@ int containsList (struct linkedList *lst, TYPE e) {
  **/
 void removeList (struct linkedList *lst, TYPE e) {
    /* FIXME: you must write this */
+   assert(lst != 0);
+   assert(lst->firstLink != 0);
+   struct DLink * temp = malloc(sizeof(struct DLink));
+   temp = lst->firsLink;
+   for(int i = 0; i < lst->size; i++){
+      if(temp->value == e)
+	 _removeLink(lst, temp);
+   }
 }
