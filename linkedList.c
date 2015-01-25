@@ -29,8 +29,8 @@ struct linkedList{
 void _initList (struct linkedList *lst) {
    /* FIXME: you must write this */
    assert(lst != 0); 
-   lst->firstLink = malloc(sizeof(struct Dlink));
-   lst->lastLink = malloc(sizeof(struct Dlink));
+   lst->firstLink = malloc(sizeof(struct DLink));
+   lst->lastLink = malloc(sizeof(struct DLink));
    lst->size = 0;
 }
 
@@ -124,8 +124,7 @@ int isEmptyList(struct linkedList *lst) {
    /*temporary return value...you may need to change this */
    if(lst->firstLink == 0)
       return 1;
-   if(lst->firstLink != 0)
-      return 0;
+   return 0;
 }
 
 /* De-allocate all links of the list
@@ -167,7 +166,7 @@ void _printList(struct linkedList* lst)
    struct DLink * temp = malloc(sizeof(struct DLink));
    temp = lst->firstLink;
    for(int i = 0; i < lst->size; i++){
-      printf("%f", temp->value);
+      printf("%d", temp->value);
       temp = temp->next;
    }
 }
@@ -329,7 +328,7 @@ void removeList (struct linkedList *lst, TYPE e) {
    assert(lst != 0);
    assert(lst->firstLink != 0);
    struct DLink * temp = malloc(sizeof(struct DLink));
-   temp = lst->firsLink;
+   temp = lst->firstLink;
    for(int i = 0; i < lst->size; i++){
       if(temp->value == e)
 	 _removeLink(lst, temp);
