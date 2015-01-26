@@ -12,34 +12,41 @@ void assertTrue(int a, int b, char* message){
 int main(int argc, char* argv[]) {
    /* Test your linked list in here! */
    struct linkedList * lst = createLinkedList();   
-   struct DLink temp = malloc(sizeof(struct DLink));
-   temp = lst->firstLink;
-   printf("testing isEmptyList...");
+   printf("testing isEmptyList...\n"); 
    assertTrue(isEmptyList(lst), 1, "Make sure list is empty");
 
-   printf("testing addBackList...");
+   printf("testing addBackList...\n");
    for(int i = 0; i < 4; i++){
       addBackList(lst, i);
-      assertTrue(temp->value, i, "Make sure list got values");
-      temp = temp->next;
+      assertTrue(backList(lst), i, "Make sure adding to the back");
    }
 
-   printf("testing isEmptyList...")
+   printf("testing isEmptyList...\n");
    assertTrue(isEmptyList(lst), 0, "Make sure list isn't empty");
 
-   temp = lst->lastLink;
-
-   printf("testing removeBackList...");
-   for(int i = 0; i < 4; i++){
-      assertTrue(temp->value, 3 - i, "Make sure it removes from back");
-      temp = temp->prev;
+   printf("testing removeBackList...\n");
+   for(int j = 0; j < 4; j++){
+      assertTrue(backList(lst), 3 - j, "Make sure it removes from back");
       removeBackList(lst);
    }
 
-   printf("testing addFrontList...");
-   for(int i = 0; i < 5; i++){
-      addFrontList(lst, i);
+   printf("testing addFrontList...\n");
+   for(int k = 0; k < 5; k++){
+      addFrontList(lst, k);
+      assertTrue(frontList(lst), k, "Make sure adding to the Front");
+   }
 
+   /*printf("testing frontList...");
+   assertTrue(lst->firstLink->value, frontList(lst), "frontList returns correct value");
+
+   printf("testing backList...");
+   assertTrue(lst->lastLink->value, backList(lst), "Backlist returns correct value");*/
+
+   printf("testing removeFrontList...\n");
+   for(int l = 0; l < 5; l++){
+      assertTrue(frontList(lst), 4 - l, "Make sure it removes from front");
+      removeFrontList(lst);
+   }
    return 0;
 }
 
