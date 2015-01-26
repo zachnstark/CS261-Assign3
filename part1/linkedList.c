@@ -299,7 +299,16 @@ void addList(struct linkedList *lst, TYPE v)
 {
    /* FIXME: you must write this */
    assert(lst != 0);
-   _addLinkBefore(lst, lst->firstLink, v);
+   struct DLink * add = malloc(sizeof(struct DLink));
+   add->value = v;
+   add->next = 0;
+   add->prev = 0;
+   if(lst->firstLink == 0){
+      lst->firstLink = add;
+      lst->lastLink = add;
+   }
+   else
+      _addLinkBefore(lst, lst->firstLink, v);
 }
 
 /*Returns boolean (encoded as an int) demonstrating whether or not
