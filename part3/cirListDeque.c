@@ -158,8 +158,13 @@ TYPE backCirListDeque(struct cirListDeque *q)
 */
 void _removeLink(struct cirListDeque *q, struct DLink *lnk)
 { 
+	if (q->size == 0)
+	{
+		printf("Error! The list is empty.\n");
+		return;
+	}
 	lnk->prev->next = lnk->next;
-	lnk->next->prev = link->prev;
+	lnk->next->prev = lnk->prev;
 	free(lnk);
 	
 	q->size--;
@@ -196,7 +201,7 @@ void removeBackCirListDeque(struct cirListDeque *q)
 */
 void freeCirListDeque(struct cirListDeque *q)
 {
-	struct DLink *iterator = q->sentinel;
+	struct DLink *iterator = q->Sentinel;
 	
 	while (q->size > 0)
 	{
@@ -225,10 +230,10 @@ void deleteCirListDeque(struct cirListDeque *q) {
 */
 int isEmptyCirListDeque(struct cirListDeque *q)
 {
-	if (q->Sentinel != 0)
+	if (q->size == 0)
 		return 1;
-	
-	return 0;
+	else
+		return 0;
 }
 
 /* Print the links in the deque from front to back
@@ -240,13 +245,13 @@ int isEmptyCirListDeque(struct cirListDeque *q)
 void printCirListDeque(struct cirListDeque *q)
 {
 	int i;
-	struct DLink *iterator = q->sentinel;
+	struct DLink *iterator = q->Sentinel;
 	
 	for ( i = 0; i < q->size; i++)
 	{
 		iterator = iterator->next;
 		
-		print("Value: %f\n", (double) iterator->value);
+		printf("Value: %.2f\n", (double) iterator->value);
 	}
 }
 
@@ -259,7 +264,7 @@ void printCirListDeque(struct cirListDeque *q)
 void reverseCirListDeque(struct cirListDeque *q)
 {
 	int i;
-	struct DLink *iterator = q->sentinel;
+	struct DLink *iterator = q->Sentinel;
 	struct DLink *tempPrev = 0;
 	
 	for ( i = 0; i < (q->size+1); i++)
