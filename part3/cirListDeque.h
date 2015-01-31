@@ -1,3 +1,9 @@
+/*
+ * Kyle Nichols, Zach Stark	January 25, 2015
+ * Assignment 3
+ * VIM/Notepad++
+ */
+
 #ifndef __CIRLISTDEQUE_H
 #define __CIRLISTDEQUE_H
 
