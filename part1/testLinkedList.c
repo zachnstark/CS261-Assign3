@@ -1,3 +1,9 @@
+/*
+ * Zachary Stark Kyle Nichols 1/30/2015
+ * Assignment 3 testing linked list deque
+ * VIM
+ */
+
 #include "linkedList.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,16 +42,28 @@ int main(int argc, char* argv[]) {
       assertTrue(frontList(lst), k, "Make sure adding to the Front");
    }
 
-   /*printf("testing frontList...");
-   assertTrue(lst->firstLink->value, frontList(lst), "frontList returns correct value");
-
-   printf("testing backList...");
-   assertTrue(lst->lastLink->value, backList(lst), "Backlist returns correct value");*/
+   printf("testing printList...\n");
+   printList(lst);
+   printf("\n");
+   printf("should print out 43210\n");
 
    printf("testing removeFrontList...\n");
    for(int l = 0; l < 5; l++){
       assertTrue(frontList(lst), 4 - l, "Make sure it removes from front");
       removeFrontList(lst);
+   }
+
+   printf("testing addList and containsList...\n");
+   for(int m = 0; m < 3; m++){
+      addList(lst, m);
+      assertTrue(frontList(lst), m, "Make sure adding to the Front");
+      assertTrue(containsList(lst, m), 1, "Make sure contains works");
+   }
+   
+   printf("testing the removeList...\n");
+   for(int u = 0; u < 3; u++){
+      assertTrue(frontList(lst), 2 - u, "make sure it removes");
+      removeList(lst, 2 - u);
    }
    return 0;
 }

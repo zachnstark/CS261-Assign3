@@ -1,3 +1,8 @@
+/*
+ * Zachary Stark Kyle Nichols 1/30/2015
+ * Implementation of a Deque using a linked list
+ */
+
 #include "linkedList.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -161,7 +166,7 @@ void deleteLinkedList(struct linkedList *lst)
 /* Function to print list
  *  Pre: lst is not null
  *   */
-void _printList(struct linkedList* lst)
+void printList(struct linkedList* lst)
 {
    /* FIXME: you must write this */
    struct DLink * temp = malloc(sizeof(struct DLink));
@@ -194,6 +199,7 @@ void addFrontList(struct linkedList *lst, TYPE e)
    if(lst->firstLink == 0){
       lst->firstLink = add;
       lst->lastLink = add;
+      lst->size++;
    }
    else
       _addLinkBefore(lst, lst->firstLink, e); 
@@ -306,6 +312,7 @@ void addList(struct linkedList *lst, TYPE v)
    if(lst->firstLink == 0){
       lst->firstLink = add;
       lst->lastLink = add;
+      lst->size++;
    }
    else
       _addLinkBefore(lst, lst->firstLink, v);
