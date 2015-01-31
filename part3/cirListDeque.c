@@ -1,3 +1,8 @@
+/*
+ * Zachary Stark Kyle Nichol 1/30/2015
+ * Implementation of a circularly linked list
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
